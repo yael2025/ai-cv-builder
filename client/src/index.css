@@ -1,0 +1,81 @@
+body{
+  margin: 0;
+  font-family: "Segoe UI" , sans-serif;
+  background-color: #f4f6f8;
+}
+h1,h2{
+  margin-bottom: 15px;
+}
+input,textarea{
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+textarea{
+  resize: vertical;
+}
+
+button{
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+button.primary{
+  background-color: #1976d2;
+  color: white;
+}
+button.secondary{
+  background-color: #555;
+  color: white;
+}
+button.danger{
+  background-color: #c62828;
+  color: white;
+}
+.card{
+  background-color: white;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  margin-bottom: 25px;
+}
+.cv-document {
+  width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 40px;
+  box-shadow: 00 8px 30px rgba(0,0,0,0.08);
+  border-radius: 8px;
+}
+.cv-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+.cv-name {
+  font-size: 28px;
+  font-weight: bold;
+}
+.cv-section {
+  margin-bottom: 25px;
+}
+.cv-section h3 {
+  border-bottom: 2px solid #1976d2;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
+  font-size: 18px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+.cv-item {
+  margin-bottom: 12px;
+}
+
+.cv-muted {
+  color: #666;
+  font-size: 14px;
+}
