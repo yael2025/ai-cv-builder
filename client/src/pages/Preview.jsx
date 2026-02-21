@@ -7,37 +7,37 @@ import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import { useRef } from "react";
 
-function Preview() {
 
+function Preview() {
+  const previewRef  = useRef(null);
+  const navigate = useNavigate();
   const cvRef = useRef();
 
   const handleDownloadPDF = async () => {
-    const element = previewRef.current;
+    console.log("DOWNLOAD CLICKED");
+    console.log("REF:", previewRef.current);
 
-    const canvas = await html2canvas(element, {
-      scale: 2,
-    });
+    if (!previewRef.current) return;
 
-    const imgData = canvas.toDataURL("image/png")
+    const canvas = await html2canvas(previewRef.current);
+    const imgData = canvas.toDataURL("image/png");
 
     const pdf = new jsPDF("p", "mm", "a4");
 
     const imgWidth = 210;
-    const pageHeight = 297;
     const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    let position = 0;
-
-    pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-    pdf.save("my-cv.pdf")
+    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+    pdf.save("cv.pdf");
   }
-}
+
 
 const [cv, setCv] = useState(null)
 const [error, setError] = useState("")
-const navigate = useNavigate();
+
 
 useEffect(() => {
+
   const fetchCv = async () => {
 
     try {
@@ -140,14 +140,13 @@ return (
         Download as PDF
       </button>
 
-      <div ref={cvRef}>
+      <div ref={previewRef}>
         <CvPreviewLive />
-
       </div>
     </div>
 
   </div>
 )
-
+}
 
 export default Preview
