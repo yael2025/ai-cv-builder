@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getCv } from "../services/api";
 import CvPreviewLive from "../components/CvPreviewLive";
-import html2canvas from "html2canvas";
-import jsPDF from "jspdf";
 import { useRef } from "react";
+import { PDFDownloadLink } from "@react-pdf/renderer";
+import CvDocument from "../pdf/CvDocument";
+
 
 
 function Preview() {
@@ -13,23 +14,7 @@ function Preview() {
   const navigate = useNavigate();
   const cvRef = useRef();
 
-  const handleDownloadPDF = async () => {
-    console.log("DOWNLOAD CLICKED");
-    console.log("REF:", previewRef.current);
-
-    if (!previewRef.current) return;
-
-    const canvas = await html2canvas(previewRef.current);
-    const imgData = canvas.toDataURL("image/png");
-
-    const pdf = new jsPDF("p", "mm", "a4");
-
-    const imgWidth = 210;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
-    pdf.save("cv.pdf");
-  }
+  
 
 
 const [cv, setCv] = useState(null)
@@ -95,15 +80,22 @@ return (
 
     <hr />
     <h2>Education</h2>
+
+{cv.education.length === 0 && <p>No education added</p>}
+
+{cv.education.map((edu, index) => (
+  <div key={index} className="cv-item">
     <p>
-      <strike> {cv.education.degree} </strike> -{" "}
-      {cv.education.school}
+      <strong>{edu.degree}</strong> - {edu.school}
     </p>
-    {(cv.education.startYear || cv.education.endYear) && (
+
+    {(edu.startYear || edu.endYear) && (
       <p>
-        {cv.education.startYear} - {cv.education.endYear}
+        {edu.startYear} - {edu.endYear}
       </p>
     )}
+  </div>
+))}
 
     <hr />
 
@@ -131,19 +123,25 @@ return (
       Back to Editor
     </button>
 
-    <div style={{ padding: "40px" }}>
-      <button
-        className="primary"
-        onClick={handleDownloadPDF}
-        style={{ marginBottom: "20px" }}
-      >
-        Download as PDF
-      </button>
+    <PDFDownloadLink
+    document={<CvDocument cv={cv} />}
+    fileName="cv.pdf"
+    style={{
+      padding: "10px 20px",
+      backgroundColor: "#2c3e50",
+      color: "white",
+      textDecoration: "none",
+      borderRadius: "5px",
+      display: "inline-block",
+      marginBottom: "20px"
+    }}
+  >
+    {({ loading }) =>
+      loading ? "Preparing PDF..." : "Download as PDF"
+    }
+</PDFDownloadLink>
 
-      <div ref={previewRef}>
-        <CvPreviewLive />
-      </div>
-    </div>
+    
 
   </div>
 )
