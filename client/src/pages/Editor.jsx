@@ -35,26 +35,6 @@ function Editor(){
         }
       };
 
-      const handleDownloadPDF = async ()=>{
-        const element = previewRef.current;
-
-        const canvas = await html2canvas(element,{
-          scale:2,
-        });
-
-        const imgData = canvas.toDataURL("image/png")
-
-        const pdf = new jsPDF("p", "mm", "a4");
-
-        const imgWidth = 210;
-        const pageHeight = 297;
-        const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-        let position = 0;
-
-        pdf.addImage(imgData, "PNG", 0, position, imgWidth, imgHeight);
-        pdf.save("my-cv.pdf")
-      }
 
     return (
         
@@ -76,13 +56,13 @@ function Editor(){
         Save CV
         </button>
 
-        <button 
+        {/* <button 
         className="primary"
         style={{marginTop:"10px"}}
         onClick={handleDownloadPDF}
         >
         Download as PDF
-        </button>
+        </button> */}
 
       
     </div>
