@@ -23,13 +23,11 @@ app.get("/api/test", (req, res) => {
 
 app.post("/api/cv/save", (req, res)=>{
   const {cvData} = req.body;
-
   if(!cvData){
     return res.status(400).json({error: "No CV data provided"})
   }
-
   savedCv = cvData
-
+  //console.log("SAVED CV:", savedCv);
   res.json({massage: "CV saved successfully"})
 })
 
