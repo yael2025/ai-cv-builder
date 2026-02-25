@@ -11,6 +11,9 @@ app.use(express.json());
 
 require("dotenv").config()
 
+console.log("Has OPENAI_API_KEY?", !!process.env.OPENAI_API_KEY);
+console.log("Key prefix:", process.env.OPENAI_API_KEY?.slice(0, 7));
+
 const OpenAI = require("openai")
 
 const openai = new OpenAI({
